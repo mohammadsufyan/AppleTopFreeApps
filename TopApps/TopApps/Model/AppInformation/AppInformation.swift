@@ -16,4 +16,6 @@ struct AppInformation {
     public var appName: String = String()
     public var copyright: String = String()
     public var description: String = String()
+    public var appIconURL: String = String()
+    public var appStoreLink: String = String()
 }
