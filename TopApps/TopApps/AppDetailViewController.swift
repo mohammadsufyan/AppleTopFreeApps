@@ -28,6 +28,8 @@ class AppDetailViewController: UIViewController {
         self.loadAppDataInView()
     }
 
+    // MARK: - Load App Details 
+    
     func loadAppDataInView() {
         self.appImageView.image = self.appInformation.appImage
         self.appNameLabel.text = self.appInformation.appName
@@ -36,7 +38,6 @@ class AppDetailViewController: UIViewController {
         self.appDescriptionTextView.isScrollEnabled = true
     }
     
-
     /*
     // MARK: - Navigation
 

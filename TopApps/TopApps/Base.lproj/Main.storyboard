@@ -86,6 +86,7 @@
                                             <outlet property="appImage" destination="4rG-kT-PV9" id="1ky-2t-Ou9"/>
                                             <outlet property="appName" destination="ZaS-BH-js8" id="Nvj-Ez-hnf"/>
                                             <outlet property="copyright" destination="CZB-jq-2kl" id="Vdv-SV-IdZ"/>
+                                            <segue destination="7wG-OR-gxI" kind="show" identifier="showAppDetail" id="ZE6-jr-lhj"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -112,7 +113,7 @@
                     <navigationItem key="navigationItem" title="Apps List" id="Q1k-vG-Pzm">
                         <barButtonItem key="leftBarButtonItem" image="categoryImage" id="gnb-Zh-mm5">
                             <connections>
-                                <action selector="showAppCategoriesView:" destination="BYZ-38-t0r" id="ILG-rX-nww"/>
+                                <segue destination="xbr-bV-P8n" kind="presentation" identifier="showAllCategories" id="rfZ-8t-14H"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="wishListImage" id="VqI-R9-Jdd">
@@ -143,7 +144,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4nR-gt-dM2">
-                                <rect key="frame" x="16" y="30" width="100" height="100"/>
+                                <rect key="frame" x="16" y="74" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="TUT-sb-CB6"/>
                                     <constraint firstAttribute="width" constant="100" id="gln-ds-iod"/>
@@ -155,7 +156,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixn-yr-OwZ">
-                                <rect key="frame" x="125" y="30" width="234" height="42"/>
+                                <rect key="frame" x="125" y="74" width="234" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="VwJ-JA-als"/>
                                 </constraints>
@@ -164,7 +165,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyrights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCk-zH-cTI">
-                                <rect key="frame" x="125" y="75" width="234" height="18"/>
+                                <rect key="frame" x="125" y="119" width="234" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="MVU-7A-KTx"/>
                                 </constraints>
@@ -173,7 +174,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" bounces="NO" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ng5-oR-JmF">
-                                <rect key="frame" x="16" y="138" width="351" height="521"/>
+                                <rect key="frame" x="16" y="182" width="351" height="477"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -197,6 +198,7 @@
                             <constraint firstItem="4nR-gt-dM2" firstAttribute="top" secondItem="ixn-yr-OwZ" secondAttribute="top" id="u4l-7d-8yL"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="GQV-jy-zRm"/>
                     <connections>
                         <outlet property="appCopyrightLabel" destination="YCk-zH-cTI" id="Pyy-oy-FJh"/>
                         <outlet property="appDescriptionTextView" destination="ng5-oR-JmF" id="o3z-bw-ze7"/>
@@ -206,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJ2-2Z-2T2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1991.2" y="102.99850074962519"/>
+            <point key="canvasLocation" x="1990" y="124"/>
         </scene>
         <!--App Categories View Controller-->
         <scene sceneID="ylU-Cd-hSM">
@@ -294,7 +296,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPv-fC-6fq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1989.5999999999999" y="813.64317841079469"/>
+            <point key="canvasLocation" x="1057" y="896"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="h70-LC-KIb">

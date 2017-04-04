@@ -53,7 +53,6 @@ class ViewController: UIViewController, APIProtocol, AppCategoriesViewController
         let copyright: String = (appInfo["im:artist"] as! [String: Any])["label"] as! String
         cell.appName.text = appName
         cell.copyright.text = copyright
-        
         if self.imageCache[appName] == nil && self.isInternetConnected {
             DispatchQueue.global().async {
                 let imageURLString: String = ((appInfo["im:image"] as! [[String: Any]])[2])["label"] as! String
@@ -87,24 +86,6 @@ class ViewController: UIViewController, APIProtocol, AppCategoriesViewController
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let appInfo : Dictionary<String, Any>
-        appInfo = self.showDataArray[indexPath.row]
-        let appName: String = (appInfo["im:name"] as! [String: Any])["label"] as! String
-        let copyright: String = (appInfo["rights"] as! [String: Any])["label"] as! String
-        let description: String = (appInfo["summary"] as! [String: Any])["label"] as! String
-        var appImage: UIImage
-        if self.imageCache[appName] != nil {
-            appImage = self.imageCache[appName]!
-        }
-        else {
-           appImage = API().getImageFromDocumentDirectory(name: appName)
-        }
-        var selectedApp: AppInformation = AppInformation.init()
-        selectedApp.appImage = appImage
-        selectedApp.appName = appName
-        selectedApp.copyright = copyright
-        selectedApp.description = description
-        self.pushDetailViewWithInfo(appInformation: selectedApp)
     }
     
     
@@ -119,38 +100,62 @@ class ViewController: UIViewController, APIProtocol, AppCategoriesViewController
         }
     }
     
-    // MARK:    Push Detail View
-    func pushDetailViewWithInfo(appInformation: AppInformation) {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let appDetailViewController: AppDetailViewController = storyBoard.instantiateViewController(withIdentifier: "AppDetailViewController") as! AppDetailViewController
-        appDetailViewController.appInformation = appInformation
-        self.navigationController?.pushViewController(appDetailViewController, animated: true)
-        
-    }
+    // MARK:    Segue Method
     
-    // MARK:    Show All Categories
-    @IBAction func showAppCategoriesView(_ sender: Any) {
-        if self.allCategoryList.count > 0 {
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            let appCategoryView: AppCategoriesViewController = storyBoard.instantiateViewController(withIdentifier: "AppCategoriesViewController") as! AppCategoriesViewController
-            var categoryNames = [String]()
-            for key in self.allCategoryList.keys {
-                categoryNames.append(key)
-            }
-            appCategoryView.delegate = self
-            appCategoryView.categoryNames = categoryNames
-            present(appCategoryView, animated: true) {
-            }
+    func getSelectedApplicationInfoObject() -> AppInformation {
+        let appInfo : Dictionary<String, Any>
+        let indexPaths: [IndexPath] = self.appCollectionView.indexPathsForSelectedItems!
+        appInfo = self.showDataArray[indexPaths[0].row]
+        let appName: String = (appInfo["im:name"] as! [String: Any])["label"] as! String
+        let copyright: String = (appInfo["rights"] as! [String: Any])["label"] as! String
+        let description: String = (appInfo["summary"] as! [String: Any])["label"] as! String
+        var appImage: UIImage
+        if self.imageCache[appName] != nil {
+            appImage = self.imageCache[appName]!
         }
         else{
-            let showAlert = UIAlertController.init(title: "Message", message: "No Categories to show", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "Ok", style: .default) { (action) in
+            appImage = API().getImageFromDocumentDirectory(name: appName)
+        }
+        var appInformation: AppInformation = AppInformation.init()
+        appInformation.appImage = appImage
+        appInformation.appName = appName
+        appInformation.copyright = copyright
+        appInformation.description = description
+        return appInformation
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAppDetail" {
+            let appInformation: AppInformation = self.getSelectedApplicationInfoObject()
+            let detailViewController: AppDetailViewController = segue.destination as! AppDetailViewController
+            detailViewController.appInformation = appInformation
+        }
+        if segue.identifier == "showAllCategories" {
+            if self.allCategoryList.count > 0 {
+                let allCategories: [String] = self.getAllCategoriesName()
+                let appCategoryView: AppCategoriesViewController = segue.destination as! AppCategoriesViewController
+                appCategoryView.categoryNames = allCategories
+                appCategoryView.delegate = self
+                
+            } else {
+                let showAlert = UIAlertController.init(title: "Message", message: "No Categories to show", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "Ok", style: .default) { (action) in
+                }
+                showAlert.addAction(cancel)
+                present(showAlert, animated: true, completion: nil)
             }
-            showAlert.addAction(cancel)
-            present(showAlert, animated: true, completion: nil)
         }
     }
     
+    // MARK:    Get All Categories Names
+    
+    func getAllCategoriesName() -> [String] {
+        var categoryNames = [String]()
+        for key in self.allCategoryList.keys {
+            categoryNames.append(key)
+        }
+        return categoryNames
+    }
     
     @IBAction func showWishList(_ sender: Any) {
         self.appCollectionView.reloadData()

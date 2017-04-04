@@ -33,12 +33,16 @@ class AppCategoriesViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:CategoryCell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell")!as! CategoryCell
         cell.categoryName.text = categoryNames[indexPath.row]
-        let actualCenter : CGPoint = cell.center
-        cell.center = CGPoint(x: tableView.frame.width * 1.5, y: actualCenter.y)
-        UIView.animate(withDuration: 0.45, delay: 0.0, options: .curveEaseInOut, animations: {
-            cell.center = actualCenter
-        })
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let appCell = cell as! CategoryCell
+        let actualCenter : CGPoint = appCell.center
+        appCell.center = CGPoint(x: tableView.frame.width * 1.5, y: actualCenter.y)
+        UIView.animate(withDuration: 0.45, delay: 0.0, options: .curveEaseInOut, animations: {
+            appCell.center = actualCenter
+        })
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
